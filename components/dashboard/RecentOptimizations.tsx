@@ -4,13 +4,17 @@ interface Optimization {
     company: string;
     matchScore: number;
     date: string;
+<<<<<<< HEAD
     status: "high" | "mid" | "low";
+=======
+>>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
 }
 
 interface RecentOptimizationsProps {
     optimizations: Optimization[];
 }
 
+<<<<<<< HEAD
 const scoreStyles = {
     high: {
         wrapper: "bg-secondary/10 border border-secondary/20 text-secondary",
@@ -114,6 +118,48 @@ export default function RecentOptimizations({
                         })}
                     </tbody>
                 </table>
+=======
+export default function RecentOptimizations({
+    optimizations,
+}: RecentOptimizationsProps) {
+    if (optimizations.length === 0) {
+        return (
+            <section className="mb-8">
+                <h2 className="text-xl font-semibold text-text mb-4">
+                    Recent Optimizations
+                </h2>
+                <div className="bg-card rounded-xl p-6 text-text/60">
+                    No optimizations yet. Upload a CV to get started.
+                </div>
+            </section>
+        );
+    }
+
+    return (
+        <section className="mb-8">
+            <h2 className="text-xl font-semibold text-text mb-4">
+                Recent Optimizations
+            </h2>
+            <div className="space-y-3">
+                {optimizations.map((item) => (
+                    <div
+                        key={item.id}
+                        className="bg-card rounded-xl p-4 flex items-center justify-between border border-white/5"
+                    >
+                        <div>
+                            <p className="font-medium text-text">{item.jobTitle}</p>
+                            <p className="text-sm text-text/60">
+                                {item.company} · {item.date}
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-accent font-bold text-lg">
+                                {item.matchScore}%
+                            </span>
+                        </div>
+                    </div>
+                ))}
+>>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
             </div>
         </section>
     );

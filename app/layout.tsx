@@ -28,6 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+<<<<<<< HEAD
     <html lang="en" className={`${syne.variable} ${inter.variable} h-full`}>
       <head>
         <link
@@ -45,6 +46,13 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full">{children}</body>
+=======
+    <html
+      lang="en"
+      className={`${syne.variable} ${inter.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col">{children}</body>
+>>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
     </html>
   );
 }
