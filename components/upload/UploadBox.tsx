@@ -1,10 +1,6 @@
 "use client";
 
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
-<<<<<<< HEAD
-=======
-import { Upload } from "lucide-react";
->>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
 import CVPreview from "./CVPreview";
 
 interface UploadBoxProps {
@@ -15,11 +11,7 @@ const ACCEPTED_TYPES = [
     "application/pdf",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ];
-<<<<<<< HEAD
 const MAX_SIZE_MB = 10;
-=======
-const MAX_SIZE_MB = 5;
->>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
 
 export default function UploadBox({ onFileSelected }: UploadBoxProps) {
     const [isDragging, setIsDragging] = useState(false);
@@ -29,26 +21,14 @@ export default function UploadBox({ onFileSelected }: UploadBoxProps) {
 
     const validateAndSetFile = (file: File) => {
         setError(null);
-<<<<<<< HEAD
-=======
-
->>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
         if (!ACCEPTED_TYPES.includes(file.type)) {
             setError("Only PDF and DOCX files are allowed.");
             return;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
         if (file.size > MAX_SIZE_MB * 1024 * 1024) {
             setError(`File must be smaller than ${MAX_SIZE_MB}MB.`);
             return;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
         setSelectedFile(file);
         onFileSelected(file);
     };
@@ -71,7 +51,6 @@ export default function UploadBox({ onFileSelected }: UploadBoxProps) {
         if (inputRef.current) inputRef.current.value = "";
     };
 
-<<<<<<< HEAD
     return (
         <div>
             <div
@@ -84,9 +63,7 @@ export default function UploadBox({ onFileSelected }: UploadBoxProps) {
                     : "border-outline-variant hover:border-secondary cursor-pointer"
                     }`}
             >
-                {/* Background glow on hover */}
                 <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
                 {selectedFile ? (
                     <div className="relative z-10 w-full max-w-md">
                         <CVPreview file={selectedFile} onRemove={handleRemove} />
@@ -105,47 +82,15 @@ export default function UploadBox({ onFileSelected }: UploadBoxProps) {
                             Drag & Drop your CV here
                         </h3>
                         <p className="text-on-surface-variant mb-8 max-w-md">
-                            or click to browse your files. Our AI engine will immediately begin
-                            parsing your experience.
+                            or click to browse your files. Our AI engine will immediately begin parsing your experience.
                         </p>
                         <div className="flex items-center gap-4">
-                            <span className="px-4 py-2 rounded-full bg-surface-container border border-outline-variant text-sm font-semibold text-tertiary">
-                                PDF
-                            </span>
-                            <span className="px-4 py-2 rounded-full bg-surface-container border border-outline-variant text-sm font-semibold text-tertiary">
-                                DOCX
-                            </span>
+                            <span className="px-4 py-2 rounded-full bg-surface-container border border-outline-variant text-sm font-semibold text-tertiary">PDF</span>
+                            <span className="px-4 py-2 rounded-full bg-surface-container border border-outline-variant text-sm font-semibold text-tertiary">DOCX</span>
                         </div>
-                        <p className="text-xs text-on-surface-variant mt-4 opacity-70">
-                            Maximum file size: 10MB
-                        </p>
+                        <p className="text-xs text-on-surface-variant mt-4 opacity-70">Maximum file size: 10MB</p>
                     </div>
                 )}
-=======
-    if (selectedFile) {
-        return <CVPreview file={selectedFile} onRemove={handleRemove} />;
-    }
-    return (
-        <div>
-            <div
-                onDragOver={(e) => {
-                    e.preventDefault();
-                    setIsDragging(true);
-                }}
-                onDragLeave={() => setIsDragging(false)}
-                onDrop={handleDrop}
-                onClick={() => inputRef.current?.click()}
-                className={`border-2 border-dashed rounded-xl p-12 flex flex-col items-center justify-center cursor-pointer transition-colors ${isDragging
-                    ? "border-primary bg-primary/5"
-                    : "border-white/15 hover:border-white/30"
-                    }`}
-            >
-                <Upload className="text-accent mb-3" size={32} />
-                <p className="text-text font-medium">
-                    Drag & drop your CV here, or click to browse
-                </p>
-                <p className="text-sm text-text/60 mt-1">PDF or DOCX, up to 5MB</p>
->>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
                 <input
                     ref={inputRef}
                     type="file"
@@ -154,16 +99,12 @@ export default function UploadBox({ onFileSelected }: UploadBoxProps) {
                     className="hidden"
                 />
             </div>
-<<<<<<< HEAD
             {error && (
                 <p className="text-error text-sm mt-2 flex items-center gap-1">
                     <span className="material-symbols-outlined text-sm">error</span>
                     {error}
                 </p>
             )}
-=======
-            {error && <p className="text-red-400 text-sm mt-2">{error}</p>}
->>>>>>> 2fb61ef3a092a06e240d924a1c893b64aa0fe816
         </div>
     );
 }
