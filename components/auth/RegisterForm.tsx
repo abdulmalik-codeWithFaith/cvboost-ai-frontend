@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FileText, User, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 
@@ -18,12 +19,69 @@ function GoogleIcon() {
 export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
   const inputBase =
     "w-full h-12 bg-[#1d1f28] rounded-lg border border-[#434655] text-[#e1e2ee] pl-11 pr-4 text-sm placeholder:text-[#434655] focus:outline-none focus:border-[#4cd7f6] focus:ring-1 focus:ring-[#4cd7f6]/40 transition-all";
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    const nameParts = formData.name.trim().split(/\s+/).filter(Boolean);
+    const [firstName, ...rest] = nameParts;
+    const lastName = rest.length > 0 ? rest.join(" ") : undefined;
+
+    if (!firstName) {
+      setError("Please enter your name.");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+   
+    const payload = {
+      email: formData.email,
+      password: formData.password,
+      firstName,
+      ...(lastName && { lastName }),
+    };
+
+    try {
+      setIsLoading(true);
+
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.message || "Something went wrong. Please try again.");
+        return;
+      }
+
+      router.push("/dashboard");
+    } catch (err) {
+      console.error("Register request failed:", err);
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-10 bg-[#10131c]/30 backdrop-blur-xl relative">
+    <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-10 bg-[#10131c]/30 backdrop-blur-xl relative min-h-screen lg:min-h-0">
       {/* Mobile logo */}
       <div className="absolute top-6 left-6 lg:hidden flex items-center gap-2">
         <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[#2563eb] to-[#4cd7f6] flex items-center justify-center">
@@ -32,7 +90,7 @@ export default function RegisterForm() {
         <span className="font-bold text-[#b4c5ff] text-base tracking-tight">CVBoost</span>
       </div>
 
-      <div className="w-full max-w-[420px] mt-14 lg:mt-0">
+      <div className="w-full max-w-[420px] my-auto pt-10 lg:pt-0">
         {/* Heading */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-[#e1e2ee] mb-1.5" style={{ letterSpacing: "-0.01em" }}>
@@ -41,18 +99,23 @@ export default function RegisterForm() {
           <p className="text-[#8d90a0] text-sm">Start optimizing your profile today.</p>
         </div>
 
-        {/* Form */}
-        <div className="space-y-4">
+        {/* Form Container */}
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Full Name */}
           <div>
-            <label className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
+            <label htmlFor="name" className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
               Full Name
             </label>
             <div className="relative">
               <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#434655]" />
               <input
+                id="name"
+                name="name"
                 type="text"
+                required
                 placeholder="John Doe"
+                value={formData.name}
+                onChange={handleChange}
                 className={inputBase}
               />
             </div>
@@ -60,14 +123,19 @@ export default function RegisterForm() {
 
           {/* Email */}
           <div>
-            <label className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
+            <label htmlFor="email" className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
               Email Address
             </label>
             <div className="relative">
               <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#434655]" />
               <input
+                id="email"
+                name="email"
                 type="email"
+                required
                 placeholder="name@company.com"
+                value={formData.email}
+                onChange={handleChange}
                 className={inputBase}
               />
             </div>
@@ -75,20 +143,26 @@ export default function RegisterForm() {
 
           {/* Password */}
           <div>
-            <label className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
+            <label htmlFor="password" className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
               Password
             </label>
             <div className="relative">
               <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#434655]" />
               <input
+                id="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
+                required
                 placeholder="••••••••"
+                value={formData.password}
+                onChange={handleChange}
                 className={`${inputBase} pr-11`}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
                 className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#434655] hover:text-[#c3c6d7] transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -97,20 +171,26 @@ export default function RegisterForm() {
 
           {/* Confirm Password */}
           <div>
-            <label className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
+            <label htmlFor="confirmPassword" className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
               Confirm Password
             </label>
             <div className="relative">
               <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#434655]" />
               <input
+                id="confirmPassword"
+                name="confirmPassword"
                 type={showConfirm ? "text" : "password"}
+                required
                 placeholder="••••••••"
+                value={formData.confirmPassword}
+                onChange={handleChange}
                 className={`${inputBase} pr-11`}
               />
               <button
                 type="button"
                 onClick={() => setShowConfirm((v) => !v)}
                 className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#434655] hover:text-[#c3c6d7] transition-colors"
+                aria-label={showConfirm ? "Hide confirmation password" : "Show confirmation password"}
               >
                 {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -122,32 +202,48 @@ export default function RegisterForm() {
             <input
               type="checkbox"
               id="terms"
+              required
               className="w-4 h-4 mt-0.5 rounded border-[#434655] bg-[#1d1f28] accent-[#4cd7f6] cursor-pointer shrink-0"
             />
             <label htmlFor="terms" className="text-xs text-[#8d90a0] leading-relaxed cursor-pointer">
               I agree to the{" "}
-              <Link href="#" className="text-[#b4c5ff] hover:text-[#4cd7f6] transition-colors">
+              <Link href="/terms" className="text-[#b4c5ff] hover:text-[#4cd7f6] transition-colors">
                 Terms of Service
               </Link>{" "}
               and{" "}
-              <Link href="#" className="text-[#b4c5ff] hover:text-[#4cd7f6] transition-colors">
+              <Link href="/privacy" className="text-[#b4c5ff] hover:text-[#4cd7f6] transition-colors">
                 Privacy Policy
               </Link>
               .
             </label>
           </div>
 
-          {/* Submit */}
+          {/* Error message — only rendered when there's something to show */}
+          {error && (
+            <p role="alert" className="text-sm text-red-400 -mt-1">
+              {error}
+            </p>
+          )}
+
+          {/* Submit Button */}
           <div className="pt-2">
             <button
-              type="button"
-              className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#2563eb] to-[#03b5d3] hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/25 flex items-center justify-center gap-2"
+              type="submit"
+              disabled={isLoading}
+              aria-busy={isLoading}
+              className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#2563eb] to-[#03b5d3] hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/25 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
-              Create Account
-              <ArrowRight size={16} />
+              {isLoading ? (
+                "Creating account..."
+              ) : (
+                <>
+                  Create Account
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
           </div>
-        </div>
+        </form>
 
         {/* Divider */}
         <div className="relative flex items-center py-6">
@@ -156,7 +252,7 @@ export default function RegisterForm() {
           <div className="flex-grow border-t border-white/10" />
         </div>
 
-        {/* Google */}
+        {/* Google OAuth */}
         <button
           type="button"
           className="w-full h-12 rounded-lg text-sm font-semibold text-[#e1e2ee] border border-white/10 bg-transparent hover:bg-white/5 transition-colors flex items-center justify-center gap-3"
