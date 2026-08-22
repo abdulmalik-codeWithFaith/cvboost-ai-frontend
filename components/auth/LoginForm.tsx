@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { FileText, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
 
@@ -17,9 +18,49 @@ function GoogleIcon() {
 
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const inputBase =
     "w-full h-12 bg-[#1d1f28] rounded-lg border border-[#434655] text-[#e1e2ee] pl-11 pr-4 text-sm placeholder:text-[#434655] focus:outline-none focus:border-[#4cd7f6] focus:ring-1 focus:ring-[#4cd7f6]/40 transition-all";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    if (!formData.email || !formData.password) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    const payload = {
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      setIsLoading(true);
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        setError(data.message || "Login failed. Please try again.");
+        return;
+      }
+
+      router.push("/dashboard");
+    } catch (err) {
+      console.error("Login request failed:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-10 relative z-10 bg-[#10131c]/50 backdrop-blur-sm">
@@ -44,7 +85,7 @@ export default function LoginForm() {
         </div>
 
         {/* Form */}
-        <div className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div>
             <label className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
@@ -56,6 +97,8 @@ export default function LoginForm() {
                 type="email"
                 placeholder="name@company.com"
                 className={inputBase}
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
             </div>
           </div>
@@ -79,6 +122,8 @@ export default function LoginForm() {
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
                 className={`${inputBase} pr-11`}
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               />
               <button
                 type="button"
@@ -90,17 +135,32 @@ export default function LoginForm() {
             </div>
           </div>
 
+          {/* Error message — only rendered when there's something to show */}
+          {error && (
+            <p role="alert" className="text-sm text-red-400 -mt-1">
+              {error}
+            </p>
+          )}
+
           {/* Submit */}
           <div className="pt-2">
             <button
-              type="button"
-              className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#2563eb] to-[#03b5d3] hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/25 flex items-center justify-center gap-2"
+              type="submit"
+              disabled={isLoading}
+              aria-busy={isLoading}
+              className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#2563eb] to-[#03b5d3] hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/25 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
-              Sign In
-              <ArrowRight size={16} />
+              {isLoading ? (
+                "Signing in..."
+              ) : (
+                <>
+                  Sign In
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
           </div>
-        </div>
+        </form>
 
         {/* Divider */}
         <div className="relative flex items-center py-6">

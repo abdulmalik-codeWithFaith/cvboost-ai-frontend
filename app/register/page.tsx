@@ -1,18 +1,18 @@
-import RegisterLeftPanel from "@/components/RegisterLeftPanel";
-import RegisterForm from "@/components/RegisterForm";
+import RegisterLeftPanel from "@/components/auth/RegisterLeftPanel";
+import RegisterForm from "@/components/auth/RegisterForm";
 
 export default function RegisterPage() {
   return (
-    <div className="h-screen w-screen flex   bg-[#05070f] overflow-x-hidden">
+    <div className="min-h-screen w-full flex bg-[#05070f] relative overflow-x-hidden">
       {/* Decorative background blobs */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#b4c5ff]/5 blur-[120px]" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[#4cd7f6]/5 blur-[150px]" />
       </div>
 
-      {/* Card */}
+      {/* Main Container Card */}
       <div
-        className="relative z-10 w-full h-full flex flex-col lg:flex-row overflow-hidden"
+        className="relative z-10 w-full min-h-screen flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden"
         style={{
           background: "rgba(15, 23, 42, 0.6)",
           backdropFilter: "blur(12px)",
