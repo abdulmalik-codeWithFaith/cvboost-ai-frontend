@@ -5,24 +5,58 @@ import Sidebar from "@/components/shared/Sidebar";
 import MobileNav from "@/components/shared/MobileNav";
 import UploadBox from "@/components/upload/UploadBox";
 import CVPreview from "@/components/upload/CVPreview";
+import JobDescriptionInput from "@/components/upload/JobDescriptionInput";
+import OptimizationResults, {
+    type OptimizationResult,
+} from "@/components/upload/OptimizationResults";
+
+const MIN_JOB_DESCRIPTION_WORDS = 25;
 
 export default function UploadPage() {
     const [file, setFile] = useState<File | null>(null);
-    const [isUploading, setIsUploading] = useState(false);
+    const [jobDescription, setJobDescription] = useState("");
+    const [isOptimizing, setIsOptimizing] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [result, setResult] = useState<OptimizationResult | null>(null);
 
-    const handleContinue = async () => {
-        if (!file) return;
-        setIsUploading(true);
-        // TODO: Replace with real NestJS API call
-        // const formData = new FormData();
-        // formData.append("cv", file);
-        // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload`, {
-        //   method: "POST",
-        //   body: formData,
-        // });
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        setIsUploading(false);
-        alert(`Mock upload complete: ${file.name}`);
+    const jobDescriptionWordCount = jobDescription.trim()
+        ? jobDescription.trim().split(/\s+/).length
+        : 0;
+    const canOptimize = !!file && jobDescriptionWordCount >= MIN_JOB_DESCRIPTION_WORDS;
+
+    const handleOptimize = async () => {
+        if (!canOptimize || !file) return;
+        setIsOptimizing(true);
+        setError(null);
+        try {
+            const formData = new FormData();
+            formData.append("cv", file);
+            formData.append("jobDescription", jobDescription);
+
+            const res = await fetch("/api/optimize", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!res.ok) {
+                const body = await res.json().catch(() => null);
+                throw new Error(body?.error || "Something went wrong while optimizing your resume.");
+            }
+
+            const data: OptimizationResult = await res.json();
+            setResult(data);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+        } finally {
+            setIsOptimizing(false);
+        }
+    };
+
+    const handleStartOver = () => {
+        setFile(null);
+        setJobDescription("");
+        setResult(null);
+        setError(null);
     };
 
     return (
@@ -31,62 +65,110 @@ export default function UploadPage() {
             <main className="flex-1 md:ml-64 flex flex-col pb-24 md:pb-0">
                 <header className="hidden md:flex items-center justify-between px-10 py-5 border-b border-white/10 bg-surface-container-low/50 backdrop-blur-sm sticky top-0 z-30">
                     <div>
-                        <h2 className="text-2xl font-bold text-on-surface">Upload Your CV</h2>
+                        <h2 className="text-2xl font-bold text-on-surface">
+                            {result ? "Your Optimized Application" : "Upload Your CV"}
+                        </h2>
                         <p className="text-sm text-on-surface-variant">
-                            Provide your current resume to begin AI optimization.
+                            {result
+                                ? "Download your tailored resume and copy your cover letter."
+                                : "Provide your resume and the job description to begin AI optimization."}
                         </p>
                     </div>
-                    {file && (
+                    {!result && file && (
                         <button
-                            onClick={handleContinue}
-                            disabled={isUploading}
+                            onClick={handleOptimize}
+                            disabled={!canOptimize || isOptimizing}
                             className="bg-primary-container text-white px-6 py-2.5 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                         >
-                            {isUploading ? (
+                            {isOptimizing ? (
                                 <>
-                                    <span className="material-symbols-outlined text-lg">progress_activity</span>
-                                    Uploading...
+                                    <span className="material-symbols-outlined text-lg animate-spin">
+                                        progress_activity
+                                    </span>
+                                    Optimizing...
                                 </>
                             ) : (
                                 <>
-                                    <span className="material-symbols-outlined text-lg">arrow_forward</span>
-                                    Continue to Optimize
+                                    <span className="material-symbols-outlined text-lg">auto_awesome</span>
+                                    Optimize with AI
                                 </>
                             )}
                         </button>
                     )}
+                    {result && (
+                        <button
+                            onClick={handleStartOver}
+                            className="text-sm text-on-surface-variant hover:text-on-surface flex items-center gap-1.5"
+                        >
+                            <span className="material-symbols-outlined text-lg">refresh</span>
+                            Start over
+                        </button>
+                    )}
                 </header>
+
                 <div className="md:hidden px-4 pt-6 pb-3">
-                    <h2 className="text-3xl font-bold text-on-surface">Upload Your CV</h2>
+                    <h2 className="text-3xl font-bold text-on-surface">
+                        {result ? "Your Optimized Application" : "Upload Your CV"}
+                    </h2>
                     <p className="text-on-surface-variant mt-2">
-                        Provide your current resume to begin the AI optimization process.
+                        {result
+                            ? "Download your tailored resume and copy your cover letter."
+                            : "Provide your resume and the job description to begin the AI optimization process."}
                     </p>
                 </div>
+
                 <div className="p-4 md:p-10 max-w-4xl mx-auto w-full flex flex-col gap-8">
-                    <UploadBox onFileSelected={setFile} />
-                    {file && (
-                        <div>
-                            <h3 className="text-xl font-semibold text-on-surface mb-3 flex items-center gap-2">
-                                <span className="material-symbols-outlined text-primary">task</span>
-                                Current Document
-                            </h3>
-                            <CVPreview file={file} onRemove={() => setFile(null)} />
-                        </div>
-                    )}
-                    <div className="flex items-center justify-center gap-2 text-on-surface-variant opacity-60">
-                        <span className="material-symbols-outlined text-sm">lock</span>
-                        <span className="text-xs">
-                            Your data is encrypted and securely stored. We never share your CV without permission.
-                        </span>
-                    </div>
-                    {file && (
-                        <button
-                            onClick={handleContinue}
-                            disabled={isUploading}
-                            className="md:hidden w-full bg-primary-container text-white py-3 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50"
-                        >
-                            {isUploading ? "Uploading..." : "Continue to Optimize"}
-                        </button>
+                    {result ? (
+                        <OptimizationResults result={result} />
+                    ) : (
+                        <>
+                            <UploadBox onFileSelected={setFile} />
+                            {file && (
+                                <div>
+                                    <h3 className="text-xl font-semibold text-on-surface mb-3 flex items-center gap-2">
+                                        <span className="material-symbols-outlined text-primary">task</span>
+                                        Current Document
+                                    </h3>
+                                    <CVPreview file={file} onRemove={() => setFile(null)} />
+                                </div>
+                            )}
+
+                            <JobDescriptionInput value={jobDescription} onChange={setJobDescription} />
+
+                            {error && (
+                                <div className="flex items-start gap-2 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+                                    <span className="material-symbols-outlined text-base mt-0.5">error</span>
+                                    {error}
+                                </div>
+                            )}
+
+                            <div className="flex items-center justify-center gap-2 text-on-surface-variant opacity-60">
+                                <span className="material-symbols-outlined text-sm">lock</span>
+                                <span className="text-xs">
+                                    Your data is encrypted and securely stored. We never share your CV without
+                                    permission.
+                                </span>
+                            </div>
+
+                            {file && (
+                                <button
+                                    onClick={handleOptimize}
+                                    disabled={!canOptimize || isOptimizing}
+                                    className="md:hidden w-full bg-primary-container text-white py-3 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+                                >
+                                    {isOptimizing ? (
+                                        <>
+                                            <span className="material-symbols-outlined text-lg animate-spin">
+                                                progress_activity
+                                            </span>
+                                            Optimizing...
+                                        </>
+                                    ) : (
+                                        "Optimize with AI"
+                                    )}
+                                </button>
+                            )}
+                        </>
                     )}
                 </div>
             </main>
