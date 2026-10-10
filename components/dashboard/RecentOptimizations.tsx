@@ -31,7 +31,7 @@ export default function RecentOptimizations({
 }: RecentOptimizationsProps) {
     return (
         <section className="glass-panel card-inner-highlight rounded-xl overflow-hidden flex flex-col">
-            <div className="p-5 border-b border-white/10 flex justify-between items-center bg-surface-container-low/50">
+            <div className="p-4 sm:p-5 border-b border-white/10 flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center bg-surface-container-low/50">
                 <div>
                     <h3 className="text-xl font-semibold text-on-surface">
                         Recent Optimizations
@@ -96,7 +96,7 @@ export default function RecentOptimizations({
                                         <p className="text-sm text-on-surface-variant">{item.date}</p>
                                     </td>
                                     <td className="py-4 px-5 text-right">
-                                        <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0 duration-200">
+                                        <div className="flex justify-end gap-2 opacity-100 translate-x-0 md:opacity-0 md:group-hover:opacity-100 md:translate-x-2 md:group-hover:translate-x-0 transition-all duration-200">
                                             <button className="p-2 text-on-surface-variant hover:text-primary rounded-md hover:bg-white/5 transition-colors">
                                                 <span className="material-symbols-outlined text-xl">
                                                     download
