@@ -99,6 +99,13 @@ export function Navbar() {
             {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
           </button>
 
+          <Link
+            href="/login"
+            className="hidden md:inline-flex items-center justify-center rounded-lg border border-white/15 px-4 py-2 text-sm font-semibold text-[#dfe3f5] transition-colors hover:bg-white/10"
+          >
+            Login
+          </Link>
+
           <button
             className="rounded-lg p-2 text-[#dfe3f5] hover:bg-white/10 md:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -128,6 +135,13 @@ export function Navbar() {
                 {link.label}
               </a>
             ))}
+            <Link
+              href="/login"
+              onClick={() => setOpen(false)}
+              className="block rounded-lg px-3 py-3 text-sm text-[#dfe3f5] hover:bg-white/5"
+            >
+              Login
+            </Link>
             <a
               href="#try"
               onClick={() => setOpen(false)}

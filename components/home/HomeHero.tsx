@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, CheckCircle2, FileText, Sparkles } from "lucide-react";
 import { AccentText, btnGhost, btnPrimary, EASE, H, IMG, Photo, ScoreRing } from "./HomeUI";
@@ -75,9 +76,9 @@ export function Hero() {
               <span className="relative">Try it now</span>
               <ArrowRight size={16} className="relative transition-transform group-hover:translate-x-0.5" />
             </a>
-            <a href="#how-it-works" className={btnGhost}>
-              See how it works
-            </a>
+            <Link href="/login" className={btnGhost}>
+              Login
+            </Link>
           </motion.div>
 
           <motion.ul
