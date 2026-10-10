@@ -66,7 +66,7 @@ export default function LoginForm() {
     <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-10 relative z-10 bg-[#10131c]/50 backdrop-blur-sm">
       {/* Mobile logo */}
       <div className="absolute top-6 left-6 lg:hidden flex items-center gap-2">
-        <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[#2563eb] to-[#4cd7f6] flex items-center justify-center">
+        <div className="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center">
           <FileText size={14} className="text-white" />
         </div>
         <span className="font-bold text-[#b4c5ff] text-base tracking-tight">CVBoost</span>
@@ -148,7 +148,7 @@ export default function LoginForm() {
               type="submit"
               disabled={isLoading}
               aria-busy={isLoading}
-              className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#2563eb] to-[#03b5d3] hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/25 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+              className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-primary-container hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/15 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
               {isLoading ? (
                 "Signing in..."

@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Syne, Inter } from "next/font/google";
 import "./globals.css";
 
@@ -48,8 +49,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#10131c",
-  colorScheme: "dark",
+  themeColor: "#090e15",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -58,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${inter.variable} h-full`}>
+    <html lang="en" className={`${syne.variable} ${inter.variable} h-full`} suppressHydrationWarning>
       <head>
         {/*
           Material Symbols is only needed by pages that use it (e.g. dashboard).
@@ -72,7 +73,16 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
         />
       </head>
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased">
+        {children}
+        <Script
+          id="theme-preference"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `try { document.documentElement.dataset.theme = localStorage.getItem("cvboost-theme") === "light" ? "light" : "dark"; } catch { document.documentElement.dataset.theme = "dark"; }`,
+          }}
+        />
+      </body>
     </html>
   );
 }

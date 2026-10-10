@@ -63,7 +63,7 @@ export default function UploadBox({ onFileSelected }: UploadBoxProps) {
                     : "border-outline-variant hover:border-secondary cursor-pointer"
                     }`}
             >
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 {selectedFile ? (
                     <div className="relative z-10 w-full max-w-md">
                         <CVPreview file={selectedFile} onRemove={handleRemove} />

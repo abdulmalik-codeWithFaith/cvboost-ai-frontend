@@ -28,26 +28,10 @@ const features = [
 export default function RegisterLeftPanel() {
   return (
     <div className="hidden lg:flex w-1/2 relative bg-[#0b0e16] p-10 flex-col justify-between border-r border-white/5 overflow-hidden">
-      {/* BG abstract glow */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] rounded-full bg-[#2563eb]/10 blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-[#4cd7f6]/8 blur-[120px]" />
-      </div>
-
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 z-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(180,197,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(180,197,255,1) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
-
       {/* Logo */}
       <div className="relative z-10">
         <Link href="/" className="flex items-center gap-2 group w-fit">
-          <div className="w-8 h-8 rounded-md bg-gradient-to-br from-[#2563eb] to-[#4cd7f6] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-md bg-primary-container flex items-center justify-center">
             <FileText size={16} className="text-white" />
           </div>
           <span className="font-bold text-[#b4c5ff] text-lg tracking-tight group-hover:text-white transition-colors">
@@ -64,7 +48,7 @@ export default function RegisterLeftPanel() {
         >
           Elevate Your
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#b4c5ff] to-[#4cd7f6]">
+          <span className="text-[#b4c5ff]">
             Career Trajectory
           </span>
         </h1>

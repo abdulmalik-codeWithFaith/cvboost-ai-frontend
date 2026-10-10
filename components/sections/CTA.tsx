@@ -12,12 +12,7 @@ export default function CTA() {
           boxShadow: "0 0 60px rgba(6,182,212,0.08)",
         }}
       >
-        {/* Decorative glows */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#4cd7f6]/8 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#2563eb]/8 rounded-full blur-3xl pointer-events-none" />
-
-        {/* Top shimmer line */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#4cd7f6]/40 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-outline-variant" />
 
         <div className="relative z-10">
           <p className="text-xs font-semibold uppercase tracking-widest text-[#4cd7f6] mb-3">
@@ -35,7 +30,7 @@ export default function CTA() {
           </p>
           <Link
             href="/register"
-            className="inline-flex items-center gap-2 px-10 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-[#2563eb] to-[#4cd7f6] hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-xl shadow-[#2563eb]/25 text-base"
+            className="inline-flex items-center gap-2 px-10 py-4 rounded-xl font-semibold text-white bg-primary-container hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-xl shadow-[#2563eb]/15 text-base"
           >
             Start Optimizing — It&apos;s Free
             <ChevronRight size={18} />

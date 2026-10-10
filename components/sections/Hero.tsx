@@ -1,19 +1,9 @@
 import Link from "next/link";
 import { Zap, ArrowRight, PlayCircle, FileText, CheckCircle } from "lucide-react";
-import ShaderCanvas from "./ShaderCanvas";
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 pb-32 px-6 md:px-10 overflow-hidden">
-      {/* Animated shader background */}
-      <div className="absolute inset-0 opacity-40">
-        <ShaderCanvas />
-      </div>
-
-      {/* Radial glow overlays */}
-      <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-[#2563eb]/20 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#4cd7f6]/15 rounded-full blur-3xl pointer-events-none" />
-
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
 
         {/* ── Left: copy ── */}
@@ -31,7 +21,7 @@ export default function Hero() {
           >
             Optimize Your CV
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563eb] to-[#4cd7f6]">
+            <span className="text-[#b4c5ff]">
               For Every Job
             </span>
           </h1>
@@ -44,7 +34,7 @@ export default function Hero() {
           <div className="flex flex-wrap gap-4 mt-4">
             <Link
               href="/register"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#2563eb] to-[#4cd7f6] hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/30"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg font-semibold text-sm text-white bg-primary-container hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/18"
             >
               Get Started Free
               <ArrowRight size={16} />
@@ -70,15 +60,13 @@ export default function Hero() {
 
         {/* ── Right: CV card mockup ── */}
         <div className="relative flex items-center justify-center">
-          <div className="absolute w-72 h-72 bg-[#2563eb]/15 rounded-full blur-3xl pointer-events-none" />
-
           <div
-            className="relative z-10 w-full max-w-md rounded-2xl p-6 border border-white/10 shadow-2xl"
+            className="relative z-10 w-full max-w-md rounded-2xl p-6 border border-white/10 shadow-2xl shadow-black/15"
             style={{
               background: "rgba(30, 41, 59, 0.7)",
               backdropFilter: "blur(12px)",
               boxShadow:
-                "0 0 30px rgba(6,182,212,0.12), inset 0 1px 0 rgba(255,255,255,0.1)",
+                "0 0 30px rgba(6,182,212,0.072), inset 0 1px 0 rgba(255,255,255,0.06)",
             }}
           >
             {/* Card header — original vs optimized */}
@@ -111,7 +99,7 @@ export default function Hero() {
               {[
                 { label: "Keyword Match", pct: 92, width: "92%", barColor: "bg-[#4cd7f6]", textColor: "text-[#4cd7f6]" },
                 { label: "Action Verbs", pct: 85, width: "85%", barColor: "bg-[#2563eb]", textColor: "text-[#b4c5ff]" },
-                { label: "ATS Readability", pct: 97, width: "97%", barColor: "bg-gradient-to-r from-[#2563eb] to-[#4cd7f6]", textColor: "text-[#e1e2ee]" },
+                { label: "ATS Readability", pct: 97, width: "97%", barColor: "bg-primary-container", textColor: "text-[#e1e2ee]" },
               ].map((m) => (
                 <div
                   key={m.label}
@@ -133,7 +121,7 @@ export default function Hero() {
 
             {/* AI rewrite snippet */}
             <div className="p-4 bg-[#0b0e16] rounded-xl border border-white/10 relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#4cd7f6]/40 to-transparent" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-outline-variant" />
               <p className="text-xs text-[#8d90a0] mb-1 uppercase tracking-widest font-semibold">
                 AI Rewrite
               </p>
@@ -144,7 +132,7 @@ export default function Hero() {
             </div>
 
             {/* Floating badge */}
-            <div className="absolute -top-4 -right-4 bg-[#2563eb] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-[#2563eb]/40 border border-[#4cd7f6]/30">
+            <div className="absolute -top-4 -right-4 bg-[#2563eb] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-[#2563eb]/24 border border-[#4cd7f6]/30">
               ✦ AI Powered
             </div>
           </div>

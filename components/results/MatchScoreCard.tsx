@@ -27,7 +27,7 @@ export default function MatchScoreCard({
 
     return (
         <div className="glass-panel card-inner-highlight rounded-xl p-6 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-secondary to-transparent opacity-40" />
+            <div className="absolute top-0 left-0 w-full h-1 bg-primary-container opacity-40" />
 
             {/* Circular Score */}
             <div className="relative w-36 h-36 shrink-0">

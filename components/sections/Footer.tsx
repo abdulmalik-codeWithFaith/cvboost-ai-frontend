@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Brand */}
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[#2563eb] to-[#4cd7f6] flex items-center justify-center">
+          <div className="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center">
             <FileText size={14} className="text-white" />
           </div>
           <span className="font-bold text-[#b4c5ff] text-sm">CVBoost</span>

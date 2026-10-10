@@ -13,7 +13,7 @@ export default function Sidebar() {
     const pathname = usePathname();
 
     return (
-        <nav className="hidden md:flex bg-surface-container-low/80 backdrop-blur-lg fixed h-screen w-64 left-0 top-0 border-r border-white/10 shadow-2xl flex-col p-3 gap-2 z-40">
+        <nav className="hidden md:flex bg-surface-container-low/80 backdrop-blur-lg fixed h-screen w-64 left-0 top-0 border-r border-white/10 shadow-2xl shadow-black/15 flex-col p-3 gap-2 z-40">
             {/* Logo */}
             <div className="flex items-center gap-2 px-2 py-6">
                 <span

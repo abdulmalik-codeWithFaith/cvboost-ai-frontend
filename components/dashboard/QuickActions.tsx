@@ -32,9 +32,9 @@ export default function QuickActions() {
                         } card-inner-highlight rounded-xl p-5 flex items-center gap-4 text-left group hover:bg-white/5 transition-all active:scale-[0.98]`}
                 >
                     <div
-                        className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform ${action.elevated
-                            ? "bg-primary-container text-white shadow-primary/30"
-                            : "bg-surface-bright text-primary border border-white/10"
+                        className={`w-12 h-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform ${action.elevated
+                            ? "bg-primary-container text-white shadow-lg shadow-primary/18"
+                            : "bg-surface-bright text-primary border border-white/10 shadow-lg shadow-black/6"
                             }`}
                     >
                         <span className="material-symbols-outlined">{action.icon}</span>

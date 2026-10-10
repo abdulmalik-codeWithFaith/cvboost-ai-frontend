@@ -5,7 +5,6 @@ const steps = [
     num: "1",
     borderColor: "border-[#b4c5ff]",
     textColor: "text-[#b4c5ff]",
-    glowColor: "bg-[#b4c5ff]/20",
     title: "Upload CV",
     desc: "Upload your existing resume in PDF or Word format.",
     icon: <FileText size={18} />,
@@ -14,7 +13,6 @@ const steps = [
     num: "2",
     borderColor: "border-[#4cd7f6]",
     textColor: "text-[#4cd7f6]",
-    glowColor: "bg-[#4cd7f6]/20",
     title: "Add Job Details",
     desc: "Paste the link or text of the target job description.",
     icon: <ScrollText size={18} />,
@@ -23,7 +21,6 @@ const steps = [
     num: "3",
     borderColor: "border-[#b4c5ff]",
     textColor: "text-[#b4c5ff]",
-    glowColor: "bg-[#b4c5ff]/20",
     title: "AI Optimization",
     desc: "Our engine analyzes and rewrites content for maximum ATS impact.",
     icon: <Sparkles size={18} />,
@@ -32,7 +29,6 @@ const steps = [
     num: "4",
     borderColor: "border-[#4cd7f6]",
     textColor: "text-[#4cd7f6]",
-    glowColor: "bg-[#4cd7f6]/20",
     title: "Download & Apply",
     desc: "Export your perfectly tailored resume and cover letter.",
     icon: <Download size={18} />,
@@ -62,7 +58,7 @@ export default function HowItWorks() {
         {/* Steps */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
           {/* Connecting line — desktop only */}
-          <div className="hidden lg:block absolute top-8 left-[12.5%] right-[12.5%] h-[1px] bg-gradient-to-r from-[#b4c5ff]/20 via-[#4cd7f6]/30 to-[#b4c5ff]/20" />
+          <div className="hidden lg:block absolute top-8 left-[12.5%] right-[12.5%] h-px bg-outline-variant" />
 
           {steps.map((s, i) => (
             <div key={i} className="flex flex-col items-center text-center gap-4">
@@ -70,9 +66,6 @@ export default function HowItWorks() {
                 className={`relative w-16 h-16 rounded-full bg-[#10131c] border-2 ${s.borderColor} ${s.textColor} flex items-center justify-center z-10`}
               >
                 <span className="text-lg font-extrabold">{s.num}</span>
-                <div
-                  className={`absolute inset-0 ${s.glowColor} rounded-full blur-md -z-10`}
-                />
               </div>
               <div>
                 <h4 className="font-bold text-[#e1e2ee] mb-1">{s.title}</h4>

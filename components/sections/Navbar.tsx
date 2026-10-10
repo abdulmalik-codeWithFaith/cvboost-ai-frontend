@@ -8,7 +8,7 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-10 h-[72px] border-b border-white/10 backdrop-blur-xl bg-[#10131c]/70">
       {/* Logo */}
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-md bg-gradient-to-br from-[#2563eb] to-[#4cd7f6] flex items-center justify-center">
+        <div className="w-8 h-8 rounded-md bg-primary-container flex items-center justify-center">
           <FileText size={16} className="text-white" />
         </div>
         <span className="font-bold text-[#b4c5ff] text-lg tracking-tight">CVBoost</span>
@@ -37,7 +37,7 @@ export default function Navbar() {
         </Link>
         <Link
           href="/register"
-          className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[#2563eb] to-[#4cd7f6] hover:opacity-90 transition-opacity"
+          className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-primary-container hover:opacity-90 transition-opacity"
         >
           Sign Up
         </Link>

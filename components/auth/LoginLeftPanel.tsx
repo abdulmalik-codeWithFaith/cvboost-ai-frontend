@@ -9,23 +9,9 @@ const stats = [
 export default function LoginLeftPanel() {
   return (
     <div className="hidden lg:flex lg:w-1/2 bg-[#0b0e16] flex-col justify-between p-10 relative z-10 border-r border-white/5 overflow-hidden">
-      {/* Decorative glow blobs */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#2563eb]/20 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[40%] h-[40%] bg-[#03b5d3]/10 rounded-full blur-[100px] pointer-events-none" />
-
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 z-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(180,197,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(180,197,255,1) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
-
       {/* Logo */}
       <div className="relative z-10 flex items-center gap-2">
-        <div className="w-10 h-10 rounded-md bg-gradient-to-br from-[#2563eb] to-[#4cd7f6] flex items-center justify-center">
+        <div className="w-10 h-10 rounded-md bg-primary-container flex items-center justify-center">
           <FileText size={20} className="text-white" />
         </div>
         <Link href="/" className="group">
@@ -43,7 +29,7 @@ export default function LoginLeftPanel() {
         >
           Elevate Your
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#b4c5ff] to-[#4cd7f6]">
+          <span className="text-[#b4c5ff]">
             Career Profile
           </span>
         </h1>
@@ -64,8 +50,6 @@ export default function LoginLeftPanel() {
         ))}
       </div>
 
-      {/* Decorative radial gradient layer */}
-      <div className="absolute bottom-0 right-0 w-3/4 h-3/4 bg-gradient-to-tl from-[#2563eb]/10 to-transparent pointer-events-none mix-blend-screen rounded-tl-full opacity-50" />
     </div>
   );
 }

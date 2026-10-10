@@ -8,7 +8,7 @@ export default function ForgotPasswordForm() {
     <div className="w-full flex items-center justify-center px-6 py-16 relative z-10 min-h-screen">
       {/* Mobile / center logo */}
       <div className="absolute top-6 left-6 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[#2563eb] to-[#4cd7f6] flex items-center justify-center">
+        <div className="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center">
           <FileText size={14} className="text-white" />
         </div>
         <span className="font-bold text-[#b4c5ff] text-base tracking-tight">CVBoost</span>
@@ -20,7 +20,6 @@ export default function ForgotPasswordForm() {
         <div className="flex justify-center mb-8">
           <div className="w-20 h-20 rounded-full bg-[#2563eb]/15 border border-[#2563eb]/30 flex items-center justify-center relative">
             {/* Inner glow */}
-            <div className="absolute inset-0 rounded-full bg-[#2563eb]/10 blur-md" />
             <div className="w-12 h-12 rounded-full bg-[#2563eb]/20 border border-[#b4c5ff]/20 flex items-center justify-center relative z-10">
               <span className="text-2xl">🔑</span>
             </div>
@@ -63,7 +62,7 @@ export default function ForgotPasswordForm() {
           {/* Submit */}
           <button
             type="button"
-            className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-gradient-to-r from-[#2563eb] to-[#03b5d3] hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/25 flex items-center justify-center gap-2"
+            className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-primary-container hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/15 flex items-center justify-center gap-2"
           >
             <Send size={16} />
             Send Reset Link
@@ -92,7 +91,7 @@ export default function ForgotPasswordForm() {
           }}
         >
           {/* Top shimmer */}
-          <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#4cd7f6]/30 to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[1px] bg-outline-variant" />
 
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-full bg-[#2563eb]/20 border border-[#2563eb]/30 flex items-center justify-center shrink-0 mt-0.5">
@@ -117,7 +116,7 @@ export default function ForgotPasswordForm() {
         {/* Bottom brand */}
         <div className="text-center mt-8">
           <div className="flex items-center justify-center gap-2 mb-1">
-            <div className="w-7 h-7 rounded-md bg-gradient-to-br from-[#2563eb] to-[#4cd7f6] flex items-center justify-center">
+            <div className="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center">
               <FileText size={13} className="text-white" />
             </div>
             <span className="font-bold text-[#b4c5ff] text-sm">CVBoost</span>
