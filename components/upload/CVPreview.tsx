@@ -10,7 +10,7 @@ export default function CVPreview({ file, onRemove }: CVPreviewProps) {
     });
 
     return (
-        <div className="glass-panel rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6 relative overflow-hidden ai-glow">
+        <div className="glass-panel rounded-xl p-6 flex flex-col sm:flex-row items-center gap-6 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1 bg-primary-container opacity-50" />
             <div className="w-16 h-20 bg-surface-container-highest rounded border border-white/10 flex items-center justify-center shrink-0 relative">
                 <span className="material-symbols-outlined text-4xl text-error">

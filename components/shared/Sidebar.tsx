@@ -23,8 +23,8 @@ export default function Sidebar() {
                     psychology
                 </span>
                 <div>
-                    <h1 className="font-bold text-primary text-lg leading-tight">
-                        CV Optimizer AI
+                    <h1 className="font-bold text-primary text-lg">
+                        CV BOOST AI
                     </h1>
                     <p className="text-on-surface-variant text-xs">Expert Intelligence</p>
                 </div>

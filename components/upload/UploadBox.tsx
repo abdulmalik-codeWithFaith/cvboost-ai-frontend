@@ -58,19 +58,18 @@ export default function UploadBox({ onFileSelected }: UploadBoxProps) {
                 onDragLeave={() => setIsDragging(false)}
                 onDrop={handleDrop}
                 onClick={() => !selectedFile && inputRef.current?.click()}
-                className={`glass-panel rounded-2xl border-2 border-dashed transition-all duration-300 p-12 flex flex-col items-center justify-center text-center min-h-[400px] relative group overflow-hidden ${isDragging
-                    ? "border-secondary bg-secondary/5"
+                className={`glass-panel dashboard-upload-box rounded-2xl border-2 border-dashed transition-all duration-300 p-12 flex flex-col items-center justify-center text-center min-h-100 relative group overflow-hidden ${isDragging
+                    ? "is-dragging border-secondary bg-secondary/5"
                     : "border-outline-variant hover:border-secondary cursor-pointer"
                     }`}
             >
-                <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 {selectedFile ? (
                     <div className="relative z-10 w-full max-w-md">
                         <CVPreview file={selectedFile} onRemove={handleRemove} />
                     </div>
                 ) : (
                     <div className="relative z-10 flex flex-col items-center">
-                        <div className="w-24 h-24 rounded-full bg-surface-container-highest flex items-center justify-center mb-6 border border-white/5 group-hover:scale-105 transition-transform duration-300 ai-glow">
+                        <div className="w-24 h-24 rounded-full bg-surface-container-highest flex items-center justify-center mb-6 border border-white/5 group-hover:scale-105 transition-transform duration-300">
                             <span
                                 className="material-symbols-outlined text-5xl text-secondary"
                                 style={{ fontVariationSettings: "'FILL' 1" }}

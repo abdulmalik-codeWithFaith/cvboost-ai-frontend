@@ -24,12 +24,12 @@ const actions = [
 
 export default function QuickActions() {
     return (
-        <div className="flex flex-col gap-4">
+        <div className=" flex flex-row gap-12 mt-4">
             {actions.map((action) => (
                 <button
                     key={action.label}
                     className={`${action.elevated ? "glass-panel-elevated ai-glow" : "glass-panel"
-                        } card-inner-highlight rounded-xl p-5 flex items-center gap-4 text-left group hover:bg-white/5 transition-all active:scale-[0.98]`}
+                        } dashboard-quick-action card-inner-highlight rounded-xl p-5 flex items-center gap-4 text-left group hover:bg-white/5 transition-all active:scale-[0.98]`}
                 >
                     <div
                         className={`w-12 h-12 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform ${action.elevated

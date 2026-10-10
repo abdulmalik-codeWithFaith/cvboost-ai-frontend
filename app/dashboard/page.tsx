@@ -11,7 +11,7 @@ export default function DashboardPage() {
             <Sidebar />
             <main className="flex-1 md:ml-64 p-6 md:p-10 pb-24 md:pb-10">
                 <WelcomeSection userName="Sarah" />
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-8">
+                <div className=" lg:grid-cols-12 gap-6 mt-8">
                     <div className="lg:col-span-8 flex flex-col gap-6">
                         <MetricCards />
                     </div>

@@ -307,6 +307,33 @@ h6 {
     0 8px 32px rgba(0, 0, 0, 0.24);
 }
 
+:root[data-theme="light"] .dashboard-quick-action {
+  background: #f3f4f6;
+}
+
+.dashboard-metric-card {
+  background: var(--surface-raised);
+}
+
+:root[data-theme="light"] .dashboard-metric-card {
+  background: #f3f4f6;
+}
+
+:root[data-theme="light"] .dashboard-upload-box {
+  background: #f3f4f6;
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+:root[data-theme="light"] .dashboard-upload-box:hover {
+  border-color: var(--border);
+}
+
+:root[data-theme="light"] .dashboard-upload-box.is-dragging {
+  background: color-mix(in srgb, var(--accent) 5%, #f3f4f6);
+  border-color: var(--accent);
+}
+
 .ai-glow {
   box-shadow: 0 0 20px rgba(6, 182, 212, 0.09);
 }
