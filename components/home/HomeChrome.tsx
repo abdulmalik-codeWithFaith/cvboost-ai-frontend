@@ -76,7 +76,7 @@ export function Navbar() {
     >
       <nav
         aria-label="Main"
-        className={`mx-auto flex h-14 max-w-6xl items-center justify-between rounded-2xl border px-4 transition-all duration-300 ${
+        className={`mx-auto flex h-14 max-w-7xl items-center justify-between rounded-2xl border px-4 transition-all duration-300 ${
           scrolled ? "border-white/10 bg-[#10131c]/80 shadow-lg shadow-black/12 backdrop-blur-xl" : "border-transparent bg-transparent"
         }`}
       >
@@ -123,7 +123,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.2 }}
-            className="mx-auto mt-2 max-w-6xl rounded-2xl border border-white/10 bg-[#10131c]/95 p-3 backdrop-blur-xl md:hidden"
+            className="mx-auto mt-2 max-w-7xl rounded-2xl border border-white/10 bg-[#10131c]/95 p-3 backdrop-blur-xl md:hidden"
           >
             {NAV.map((link) => (
               <a
@@ -164,8 +164,8 @@ export function Footer() {
     { heading: "Company", links: [["Terms", "#"], ["Privacy", "#"], ["Support", "#"], ["Contact", "#"]] },
   ];
   return (
-    <footer className="border-t border-white/10 px-6 py-14 md:px-10">
-      <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
+    <footer className="border-t border-white/10 px-4 py-14 md:px-7">
+      <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
         <div>
           <Logo small />
           <p className="mt-3 max-w-xs text-sm text-[#9aa0b4]">AI that tailors your CV and cover letter to every job you apply for.</p>
@@ -191,7 +191,7 @@ export function Footer() {
           </div>
         ))}
       </div>
-      <p className="mx-auto mt-12 max-w-6xl text-xs text-[#6b7086]">© {new Date().getFullYear()} CVBoost. All rights reserved.</p>
+      <p className="mx-auto mt-12 max-w-7xl text-xs text-[#6b7086]">© {new Date().getFullYear()} CVBoost. All rights reserved.</p>
     </footer>
   );
 }

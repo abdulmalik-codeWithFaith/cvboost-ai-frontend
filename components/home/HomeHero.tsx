@@ -14,8 +14,8 @@ export function Hero() {
   const line1 = ["Optimize", "your", "CV"];
 
   return (
-    <section ref={ref} id="top" className="relative flex min-h-screen items-center px-6 pb-24 pt-32 md:px-10">
-      <div className="relative z-10 mx-auto grid w-full max-w-6xl items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
+    <section ref={ref} id="top" className="relative flex min-h-screen items-center px-4 pb-24 pt-32 md:px-7">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
         {/* copy */}
         <div className="flex flex-col gap-6">
           <motion.div
@@ -105,7 +105,7 @@ export function Hero() {
         >
           <motion.div style={{ y: imgY }} className="relative">
             <div className="relative overflow-hidden rounded-3xl border border-white/10 shadow-2xl shadow-[#2563eb]/12">
-              <Photo src={IMG.hero} alt="Job seeker reviewing a resume on a laptop" className="h-[500px] w-full object-cover opacity-80" />
+              <Photo src={IMG.hero} alt="Job seeker reviewing a resume on a laptop" className="h-125 w-full object-cover opacity-80" />
               <div className="absolute inset-0 bg-black/30" />
             </div>
 
@@ -113,7 +113,7 @@ export function Hero() {
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -left-3 bottom-8 w-[17rem] rounded-2xl border border-white/10 bg-[#161a26]/80 p-4 shadow-2xl shadow-black/15 backdrop-blur-xl md:-left-10"
+              className="absolute -left-3 bottom-8 w-68 rounded-2xl border border-white/10 bg-[#161a26]/80 p-4 shadow-2xl shadow-black/15 backdrop-blur-xl md:-left-10"
             >
               <div className="mb-3 flex items-center gap-3">
                 <ScoreRing score={92} size={64} />

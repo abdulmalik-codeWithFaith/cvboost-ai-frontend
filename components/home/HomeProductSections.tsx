@@ -33,8 +33,8 @@ export function Features() {
   ];
 
   return (
-    <section id="features" className="relative scroll-mt-20 border-y border-white/5 bg-[#0b0e16]/60 px-6 py-28 md:px-10">
-      <div className="mx-auto max-w-6xl">
+    <section id="features" className="relative scroll-mt-20 border-y border-white/5 bg-[#0b0e16]/60 px-4 py-28 md:px-7">
+      <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="What you get"
           title="Everything a recruiter's filter looks for"
@@ -217,8 +217,8 @@ export function HowItWorks() {
   const scaleY = useSpring(scrollYProgress, { stiffness: 100, damping: 26 });
 
   return (
-    <section id="how-it-works" className="scroll-mt-20 px-6 py-28 md:px-10">
-      <div className="mx-auto max-w-6xl">
+    <section id="how-it-works" className="scroll-mt-20 px-4 py-28 md:px-7">
+      <div className="mx-auto max-w-7xl">
         <SectionHeading eyebrow="Simple process" title="Four steps to a tailored application" sub="No templates to fill in and no keywords to guess." />
 
         <div className="grid items-start gap-14 lg:grid-cols-2">
@@ -318,8 +318,8 @@ export function BeforeAfter() {
   const [index, setIndex] = useState(0);
   const sample = SAMPLES[index];
   return (
-    <section className="relative overflow-hidden border-y border-white/5 bg-[#0b0e16]/60 px-6 py-28 md:px-10">
-      <div className="mx-auto max-w-5xl">
+    <section className="relative overflow-hidden border-y border-white/5 bg-[#0b0e16]/60 px-4 py-28 md:px-7">
+      <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Before and after"
           title={

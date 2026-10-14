@@ -15,8 +15,8 @@ export function Stats() {
     { value: 100, suffix: "%", label: "private by default" },
   ];
   return (
-    <section className="px-6 py-20 md:px-10">
-      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 md:grid-cols-4">
+    <section className="px-4 py-20 md:px-7">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 md:grid-cols-4">
         {stats.map((stat, index) => (
           <Reveal key={stat.label} delay={index * 0.08} className="text-center">
             <p className={`${H} text-4xl font-extrabold md:text-5xl`}>
@@ -41,8 +41,8 @@ const TESTIMONIALS = [
 
 export function Testimonials() {
   return (
-    <section className="px-6 pb-28 md:px-10">
-      <div className="mx-auto max-w-6xl">
+    <section className="px-4 pb-28 md:px-7">
+      <div className="mx-auto max-w-7xl">
         <SectionHeading title="Job seekers who stopped guessing" />
         <div className="grid gap-5 md:grid-cols-3">
           {TESTIMONIALS.map((testimonial, index) => (
@@ -104,8 +104,8 @@ const PLANS = [
 export function Pricing() {
   const [yearly, setYearly] = useState(true);
   return (
-    <section id="pricing" className="scroll-mt-20 border-t border-white/5 bg-[#0b0e16]/60 px-6 py-28 md:px-10">
-      <div className="mx-auto max-w-6xl">
+    <section id="pricing" className="scroll-mt-20 border-t border-white/5 bg-[#0b0e16]/60 px-4 py-28 md:px-7">
+      <div className="mx-auto max-w-7xl">
         <SectionHeading eyebrow="Pricing" title="Start free, upgrade when you're hiring-season busy" sub="Cancel any time." />
 
         <Reveal>
@@ -223,7 +223,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export function FAQ() {
   return (
-    <section id="faq" className="scroll-mt-20 px-6 py-28 md:px-10">
+    <section id="faq" className="scroll-mt-20 px-4 py-28 md:px-7">
       <div className="mx-auto max-w-3xl">
         <SectionHeading eyebrow="FAQ" title="Questions, answered" />
         <Reveal>
@@ -240,7 +240,7 @@ export function FAQ() {
 
 export function FinalCTA() {
   return (
-    <section className="px-6 pb-24 md:px-10">
+    <section className="px-4 pb-24 md:px-7">
       <Reveal>
         <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 px-8 py-20 text-center">
           <Photo src={IMG.cta} alt="" className="absolute inset-0 h-full w-full object-cover opacity-30" />

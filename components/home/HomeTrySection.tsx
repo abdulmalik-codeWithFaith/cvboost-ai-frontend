@@ -133,9 +133,9 @@ export default function HomeTrySection() {
   };
 
   return (
-    <section id="try" className="relative scroll-mt-20 px-6 py-28 md:px-10">
+    <section id="try" className="relative scroll-mt-20 px-4 py-28 md:px-7">
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-outline-variant" />
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl">
         <SectionHeading
           eyebrow="Live preview"
           title={
