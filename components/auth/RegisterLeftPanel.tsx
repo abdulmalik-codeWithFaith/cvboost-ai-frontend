@@ -1,5 +1,6 @@
+import { CVBoostLogo } from "@/components/brand";
 import Link from "next/link";
-import { FileText, Zap, Target, Award } from "lucide-react";
+import { Zap, Target, Award } from "lucide-react";
 
 const features = [
   {
@@ -30,14 +31,12 @@ export default function RegisterLeftPanel() {
     <div className="hidden lg:flex w-1/2 relative bg-[#0b0e16] p-10 flex-col justify-between border-r border-white/5 overflow-hidden">
       {/* Logo */}
       <div className="relative z-10">
-        <Link href="/" className="flex items-center gap-2 group w-fit">
-          <div className="w-8 h-8 rounded-md bg-primary-container flex items-center justify-center">
-            <FileText size={16} className="text-white" />
-          </div>
-          <span className="font-bold text-[#b4c5ff] text-lg tracking-tight group-hover:text-white transition-colors">
-            CVBoost
-          </span>
-        </Link>
+        <CVBoostLogo
+          variant="full"
+          size="lg"
+          tagline="Career Intelligence"
+          href="/"
+        />
       </div>
 
       {/* Headline + features */}

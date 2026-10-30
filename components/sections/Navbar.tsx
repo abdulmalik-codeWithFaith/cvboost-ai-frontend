@@ -1,18 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { FileText } from "lucide-react";
+import { CVBoostLogo } from "@/components/brand";
 
 export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-10 h-18 border-b border-white/10 backdrop-blur-xl bg-[#10131c]/70">
       {/* Logo */}
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-md bg-primary-container flex items-center justify-center">
-          <FileText size={16} className="text-white" />
-        </div>
-        <span className="font-bold text-[#b4c5ff] text-lg tracking-tight">CVBoost</span>
-      </div>
+      <CVBoostLogo variant="logo" size="md" href="/" />
 
       {/* Nav links */}
       <div className="hidden md:flex gap-8 items-center text-sm">

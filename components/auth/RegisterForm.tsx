@@ -1,17 +1,23 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { CVBoostLogo } from "@/components/brand";
+import { useActionState, useState } from "react";
 import Link from "next/link";
 import {
-  FileText,
+  signInWithGoogle,
+  signUp,
+  type ActionState,
+} from "@/app/auth/action";
+import {
   User,
   Mail,
   Lock,
   Eye,
   EyeOff,
   ArrowRight,
+  LoaderCircle,
 } from "lucide-react";
+import FormSubmitButton from "@/components/shared/FormSubmitButton";
 
 function GoogleIcon() {
   return (
@@ -50,10 +56,11 @@ export default function RegisterForm() {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const router = useRouter();
+  const [state, formAction, isPending] = useActionState<ActionState, FormData>(
+    signUp,
+    null
+  );
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
   // CVBoost Design System: var(--bg) / var(--surface) / var(--border) / var(--text)
   // are set by the theme provider on :root / [data-theme="dark"] (see design.md section 7).
@@ -64,67 +71,20 @@ export default function RegisterForm() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    const nameParts = formData.name.trim().split(/\s+/).filter(Boolean);
-    const [firstName, ...rest] = nameParts;
-    const lastName = rest.length > 0 ? rest.join(" ") : undefined;
-
-    if (!firstName) {
-      setError("Please enter your name.");
-      return;
-    }
-
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    const payload = {
-      email: formData.email,
-      password: formData.password,
-      firstName,
-      ...(lastName && { lastName }),
-    };
-
-    try {
-      setIsLoading(true);
-
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        setError(data.message || "Something went wrong. Please try again.");
-        return;
-      }
-
-      router.push("/dashboard");
-    } catch (err) {
-      console.error("Register request failed:", err);
-      setError("Network error. Please check your connection and try again.");
-    } finally {
-      setIsLoading(false);
+      e.preventDefault();
+      setPasswordError("Passwords do not match.");
+    } else {
+      setPasswordError(null);
     }
   };
 
   return (
     <div className="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-10 bg-(--bg) relative min-h-screen lg:min-h-0">
       {/* Mobile logo */}
-      <div className="absolute top-6 left-6 lg:hidden flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-(--accent) flex items-center justify-center">
-          <FileText size={14} className="text-(--accentFg)" />
-        </div>
-        <span
-          className="font-heading font-semibold text-(--text) text-[20px]"
-          style={{ letterSpacing: "-0.4px" }}
-        >
-          CVBoost
-        </span>
+      <div className="absolute top-6 left-6 lg:hidden">
+        <CVBoostLogo variant="logo" size="sm" href="/" />
       </div>
 
       <div className="w-full max-w-105 my-auto pt-10 lg:pt-0">
@@ -149,7 +109,7 @@ export default function RegisterForm() {
         </div>
 
         {/* Form Container */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form action={formAction} onSubmit={handleSubmit} className="space-y-4">
           {/* Full Name */}
           <div>
             <label
@@ -220,6 +180,7 @@ export default function RegisterForm() {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 required
+                minLength={8}
                 placeholder="••••••••"
                 value={formData.password}
                 onChange={handleChange}
@@ -305,26 +266,28 @@ export default function RegisterForm() {
           </div>
 
           {/* Error message — only rendered when there's something to show */}
-          {error && (
+          {(passwordError || state?.error) && (
             <p
               role="alert"
               className="font-body text-[14px] text-warning -mt-1"
             >
-              {error}
+              {passwordError || state?.error}
             </p>
           )}
-
           {/* Submit Button */}
           <div className="pt-2">
             <button
               type="submit"
-              disabled={isLoading}
-              aria-busy={isLoading}
+              disabled={isPending}
+              aria-busy={isPending}
               className="w-full h-13.25 rounded-full font-body font-medium text-[15px] text-(--accentFg) bg-(--accent) hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ letterSpacing: "-0.3px" }}
             >
-              {isLoading ? (
-                "Creating account..."
+              {isPending ? (
+                <>
+                  <LoaderCircle size={16} className="animate-spin" aria-hidden="true" />
+                  Creating account...
+                </>
               ) : (
                 <>
                   Create account
@@ -345,14 +308,16 @@ export default function RegisterForm() {
         </div>
 
         {/* Google OAuth */}
-        <button
-          type="button"
-          className="w-full h-13.25 rounded-full font-body text-[15px] font-medium text-(--text) border border-outline-variant bg-(--surface) hover:bg-(--border)/20 transition-colors flex items-center justify-center gap-3"
-          style={{ letterSpacing: "-0.3px" }}
-        >
-          <GoogleIcon />
-          Continue with Google
-        </button>
+        <form action={signInWithGoogle}>
+          <FormSubmitButton
+            pendingLabel="Connecting..."
+            className="w-full h-13.25 rounded-full font-body text-[15px] font-medium text-(--text) border border-outline-variant bg-(--surface) hover:bg-(--border)/20 transition-colors flex items-center justify-center gap-3"
+            style={{ letterSpacing: "-0.3px" }}
+          >
+            <GoogleIcon />
+            Continue with Google
+          </FormSubmitButton>
+        </form>
 
         {/* Sign in link */}
         <p className="text-center mt-6 font-body text-[13px] text-(--text-muted)">

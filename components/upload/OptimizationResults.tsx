@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { LoaderCircle } from "lucide-react";
 import type { ResumeData } from "@/lib/resume-pdf";
 
 export interface OptimizationResult {
@@ -15,6 +16,8 @@ export default function OptimizationResults({ result }: { result: OptimizationRe
     const [isDownloading, setIsDownloading] = useState(false);
     const [downloadError, setDownloadError] = useState<string | null>(null);
     const [copiedField, setCopiedField] = useState<"subject" | "letter" | null>(null);
+    const [copyingField, setCopyingField] = useState<"subject" | "letter" | null>(null);
+    const [copyError, setCopyError] = useState<string | null>(null);
 
     const handleDownloadPdf = async () => {
         setIsDownloading(true);
@@ -44,9 +47,17 @@ export default function OptimizationResults({ result }: { result: OptimizationRe
     };
 
     const copyToClipboard = async (text: string, field: "subject" | "letter") => {
-        await navigator.clipboard.writeText(text);
-        setCopiedField(field);
-        setTimeout(() => setCopiedField(null), 1500);
+        setCopyingField(field);
+        setCopyError(null);
+        try {
+            await navigator.clipboard.writeText(text);
+            setCopiedField(field);
+            setTimeout(() => setCopiedField(null), 1500);
+        } catch {
+            setCopyError("Couldn't copy to clipboard. Check browser permissions and try again.");
+        } finally {
+            setCopyingField(null);
+        }
     };
 
     return (
@@ -87,12 +98,15 @@ export default function OptimizationResults({ result }: { result: OptimizationRe
                 </div>
                 <button
                     onClick={handleDownloadPdf}
-                    disabled={isDownloading}
+                    disabled={isDownloading || copyingField !== null}
+                    aria-busy={isDownloading}
                     className="bg-primary-container text-white px-5 py-2.5 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center gap-2 shrink-0"
                 >
-                    <span className="material-symbols-outlined text-lg">
-                        {isDownloading ? "progress_activity" : "download"}
-                    </span>
+                    {isDownloading ? (
+                        <LoaderCircle size={18} className="animate-spin" aria-hidden="true" />
+                    ) : (
+                        <span className="material-symbols-outlined text-lg">download</span>
+                    )}
                     {isDownloading ? "Generating..." : "Download PDF"}
                 </button>
             </div>
@@ -107,10 +121,16 @@ export default function OptimizationResults({ result }: { result: OptimizationRe
                     </h3>
                     <button
                         onClick={() => copyToClipboard(result.emailSubject, "subject")}
-                        className="text-xs text-primary hover:underline flex items-center gap-1"
+                        disabled={isDownloading || copyingField !== null}
+                        aria-busy={copyingField === "subject"}
+                        className="text-xs text-primary hover:underline flex items-center gap-1 disabled:opacity-60"
                     >
-                        <span className="material-symbols-outlined text-sm">content_copy</span>
-                        {copiedField === "subject" ? "Copied!" : "Copy"}
+                        {copyingField === "subject" ? (
+                            <LoaderCircle size={14} className="animate-spin" aria-hidden="true" />
+                        ) : (
+                            <span className="material-symbols-outlined text-sm">content_copy</span>
+                        )}
+                        {copyingField === "subject" ? "Copying..." : copiedField === "subject" ? "Copied!" : "Copy"}
                     </button>
                 </div>
                 <p className="text-sm text-on-surface bg-surface-container p-3 rounded-lg">
@@ -127,16 +147,23 @@ export default function OptimizationResults({ result }: { result: OptimizationRe
                     </h3>
                     <button
                         onClick={() => copyToClipboard(result.coverLetter, "letter")}
-                        className="text-xs text-primary hover:underline flex items-center gap-1"
+                        disabled={isDownloading || copyingField !== null}
+                        aria-busy={copyingField === "letter"}
+                        className="text-xs text-primary hover:underline flex items-center gap-1 disabled:opacity-60"
                     >
-                        <span className="material-symbols-outlined text-sm">content_copy</span>
-                        {copiedField === "letter" ? "Copied!" : "Copy"}
+                        {copyingField === "letter" ? (
+                            <LoaderCircle size={14} className="animate-spin" aria-hidden="true" />
+                        ) : (
+                            <span className="material-symbols-outlined text-sm">content_copy</span>
+                        )}
+                        {copyingField === "letter" ? "Copying..." : copiedField === "letter" ? "Copied!" : "Copy"}
                     </button>
                 </div>
                 <div className="text-sm text-on-surface whitespace-pre-line leading-relaxed bg-surface-container p-4 rounded-lg max-h-96 overflow-y-auto">
                     {result.coverLetter}
                 </div>
             </div>
+            {copyError && <p role="alert" className="text-sm text-red-400 -mt-3">{copyError}</p>}
         </div>
     );
 }

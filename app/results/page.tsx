@@ -1,4 +1,5 @@
 import Sidebar from "@/components/shared/Sidebar";
+import MobileHeader from "@/components/shared/MobileHeader";
 import MobileNav from "@/components/shared/MobileNav";
 import MatchScoreCard from "@/components/results/MatchScoreCard";
 import KeywordAnalysisCard from "@/components/results/KeywordAnalysisCard";
@@ -92,7 +93,8 @@ export default function ResultsPage() {
     return (
         <div className="flex min-h-screen">
             <Sidebar />
-            <main className="flex-1 md:ml-64 p-6 md:p-10 pb-24 md:pb-10">
+            <main className="flex-1 md:ml-64 p-4 sm:p-6 md:p-10 pb-24 md:pb-10">
+                <MobileHeader />
                 {/* Header */}
                 <div className="mb-8">
                     <h2 className="text-3xl font-bold text-on-surface">

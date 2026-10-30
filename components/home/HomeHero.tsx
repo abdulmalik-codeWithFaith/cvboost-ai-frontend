@@ -4,6 +4,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, CheckCircle2, FileText, Sparkles } from "lucide-react";
+import { FaBolt, FaBriefcase, FaBullseye, FaLeaf, FaLink, FaUserTie, FaUsers } from "react-icons/fa6";
+import { siGreenhouse } from "simple-icons";
 import { AccentText, btnGhost, btnPrimary, EASE, H, IMG, Photo, ScoreRing } from "./HomeUI";
 
 export function Hero() {
@@ -173,7 +175,23 @@ export function Hero() {
 }
 
 export function Marquee() {
-  const items = ["Workday", "Greenhouse", "Lever", "Taleo", "iCIMS", "SmartRecruiters", "Ashby", "BambooHR"];
+  const items = [
+    { name: "Workday", icon: <FaBriefcase aria-hidden="true" /> },
+    {
+      name: "Greenhouse",
+      icon: (
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d={siGreenhouse.path} />
+        </svg>
+      ),
+    },
+    { name: "Lever", icon: <FaLink aria-hidden="true" /> },
+    { name: "Taleo", icon: <FaBullseye aria-hidden="true" /> },
+    { name: "iCIMS", icon: <FaUsers aria-hidden="true" /> },
+    { name: "SmartRecruiters", icon: <FaUserTie aria-hidden="true" /> },
+    { name: "Ashby", icon: <FaBolt aria-hidden="true" /> },
+    { name: "BambooHR", icon: <FaLeaf aria-hidden="true" /> },
+  ];
   const row = [...items, ...items];
   return (
     <section aria-label="Supported applicant tracking systems" className="border-y border-white/5 bg-[#0b0e16]/60 py-8">
@@ -184,9 +202,15 @@ export function Marquee() {
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
         >
-          {row.map((name, index) => (
-            <span key={`${name}-${index}`} className={`${H} text-xl font-bold text-white/30`}>
-              {name}
+          {row.map(({ name, icon }, index) => (
+            <span
+              key={`${name}-${index}`}
+              className={`${H} ats-marquee-item inline-flex items-center gap-2 text-xl font-bold text-white/30`}
+            >
+              <span className="h-5 w-5 shrink-0 [&>svg]:h-full [&>svg]:w-full" aria-hidden="true">
+                {icon}
+              </span>
+              <span>{name}</span>
             </span>
           ))}
         </motion.div>

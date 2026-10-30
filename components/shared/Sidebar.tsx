@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { CVBoostLogo } from "@/components/brand";
 
 const navItems = [
     { label: "Dashboard", href: "/dashboard", icon: "dashboard" },
@@ -15,19 +16,13 @@ export default function Sidebar() {
     return (
         <nav className="hidden md:flex bg-surface-container-low/80 backdrop-blur-lg fixed h-screen w-64 left-0 top-0 border-r border-white/10 shadow-2xl shadow-black/15 flex-col p-3 gap-2 z-40">
             {/* Logo */}
-            <div className="flex items-center gap-2 px-2 py-6">
-                <span
-                    className="material-symbols-outlined text-primary text-3xl"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                    psychology
-                </span>
-                <div>
-                    <h1 className="font-bold text-primary text-lg">
-                        CV BOOST AI
-                    </h1>
-                    <p className="text-on-surface-variant text-xs">Expert Intelligence</p>
-                </div>
+            <div className="px-3 py-6">
+                <CVBoostLogo
+                    variant="full"
+                    size="md"
+                    tagline="Expert Intelligence"
+                    href="/dashboard"
+                />
             </div>
 
             {/* Nav Items */}
@@ -39,7 +34,7 @@ export default function Sidebar() {
                             key={item.href}
                             href={item.href}
                             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${isActive
-                                ? "bg-primary-container text-white"
+                                ? "bg-primary-container text-white font-medium"
                                 : "text-on-surface-variant hover:bg-white/5 hover:text-on-surface"
                                 }`}
                         >
@@ -59,17 +54,15 @@ export default function Sidebar() {
                 })}
             </div>
 
-            {/* User Profile at bottom */}
-            <div className="border-t border-white/10 pt-3 mt-3">
-                <div className="flex items-center gap-3 px-3 py-2">
-                    <div className="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-white text-sm font-bold">
-                        S
-                    </div>
-                    <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-on-surface truncate">Sarah Johnson</p>
-                        <p className="text-xs text-on-surface-variant truncate">Pro Plan</p>
-                    </div>
+            {/* Bottom Help / Status */}
+            <div className="p-3 bg-white/5 rounded-2xl border border-white/5 flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="text-xs font-medium text-white/80">AI Model Active</span>
                 </div>
+                <p className="text-[11px] text-on-surface-variant">
+                    Ready to optimize your CV with target ATS scoring.
+                </p>
             </div>
         </nav>
     );

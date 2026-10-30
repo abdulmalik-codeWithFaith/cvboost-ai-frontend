@@ -220,7 +220,7 @@ export default function HomeTrySection() {
                     <label htmlFor="jd" className="text-sm font-semibold text-white">
                       2. Paste the job description
                     </label>
-                    <button type="button" onClick={() => setJd(SAMPLE_JD)} className="text-xs font-medium text-[#4cd7f6] hover:underline">
+                    <button type="button" onClick={() => setJd(SAMPLE_JD)} disabled={phase === "analyzing"} className="text-xs font-medium text-[#4cd7f6] hover:underline disabled:opacity-50">
                       Use a sample
                     </button>
                   </div>
@@ -237,7 +237,7 @@ export default function HomeTrySection() {
                   </p>
                 </div>
 
-                <button type="button" onClick={run} disabled={!canRun} className={`${btnPrimary} w-full`}>
+                <button type="button" onClick={run} disabled={!canRun} aria-busy={phase === "analyzing"} className={`${btnPrimary} w-full`}>
                   {phase === "analyzing" ? (
                     <>
                       <Loader2 size={16} className="relative animate-spin" />

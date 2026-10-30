@@ -1,17 +1,15 @@
 "use client";
 
+import { CVBoostLogo } from "@/components/brand";
 import Link from "next/link";
-import { Mail, Send, ArrowLeft, Info, FileText } from "lucide-react";
+import { Mail, Send, ArrowLeft, Info } from "lucide-react";
 
 export default function ForgotPasswordForm() {
   return (
     <div className="w-full flex items-center justify-center px-6 py-16 relative z-10 min-h-screen">
-      {/* Mobile / center logo */}
-      <div className="absolute top-6 left-6 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center">
-          <FileText size={14} className="text-white" />
-        </div>
-        <span className="font-bold text-[#b4c5ff] text-base tracking-tight">CVBoost</span>
+      {/* Top logo */}
+      <div className="absolute top-6 left-6">
+        <CVBoostLogo variant="logo" size="sm" href="/" />
       </div>
 
       <div className="w-full max-w-[440px]">
@@ -114,14 +112,13 @@ export default function ForgotPasswordForm() {
         </div>
 
         {/* Bottom brand */}
-        <div className="text-center mt-8">
-          <div className="flex items-center justify-center gap-2 mb-1">
-            <div className="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center">
-              <FileText size={13} className="text-white" />
-            </div>
-            <span className="font-bold text-[#b4c5ff] text-sm">CVBoost</span>
-          </div>
-          <p className="text-xs text-[#434655]">AI-Powered Resume Optimization</p>
+        <div className="text-center mt-8 flex justify-center">
+          <CVBoostLogo
+            variant="full"
+            size="sm"
+            tagline="AI-Powered Resume Optimization"
+            href="/"
+          />
         </div>
       </div>
     </div>

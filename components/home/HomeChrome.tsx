@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { CVBoostLogo } from "@/components/brand";
+import { useEffect, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { ArrowRight, FileText, Menu, Moon, Sun, X } from "lucide-react";
@@ -27,17 +28,25 @@ const NAV = [
 ];
 
 function Logo({ small = false }: { small?: boolean }) {
+  const scrollToTop = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.location.hash) {
+      window.history.replaceState(
+        window.history.state,
+        "",
+        window.location.pathname + window.location.search
+      );
+    }
+  };
+
   return (
-    <a href="#top" className="flex items-center gap-2" aria-label="CVBoost home">
-      <span
-        className={`flex items-center justify-center rounded-lg bg-primary-container ${
-          small ? "h-7 w-7" : "h-8 w-8"
-        }`}
-      >
-        <FileText size={small ? 14 : 16} className="text-white" />
-      </span>
-      <span className={`${H} text-lg font-bold tracking-tight text-white`}>CVBoost</span>
-    </a>
+    <CVBoostLogo
+      variant="logo"
+      size={small ? "sm" : "md"}
+      href="#top"
+      onClick={scrollToTop}
+    />
   );
 }
 
@@ -167,8 +176,12 @@ export function Footer() {
     <footer className="border-t border-white/10 px-4 py-14 md:px-7">
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
         <div>
-          <Logo small />
-          <p className="mt-3 max-w-xs text-sm text-[#9aa0b4]">AI that tailors your CV and cover letter to every job you apply for.</p>
+          <CVBoostLogo
+            variant="full"
+            size="md"
+            tagline="AI that tailors your CV and cover letter to every job"
+            href="#top"
+          />
         </div>
         {columns.map((column) => (
           <div key={column.heading}>

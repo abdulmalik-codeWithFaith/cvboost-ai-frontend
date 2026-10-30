@@ -45,6 +45,16 @@ export const metadata: Metadata = {
     title,
     description,
   },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/brand/logo-icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   // Tip: drop an opengraph-image.png (1200x630) into /app and Next picks it up automatically.
 };
 

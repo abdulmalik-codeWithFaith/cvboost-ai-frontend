@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Sidebar from "@/components/shared/Sidebar";
 import MobileNav from "@/components/shared/MobileNav";
+import MobileHeader from "@/components/shared/MobileHeader";
 import UploadBox from "@/components/upload/UploadBox";
 import CVPreview from "@/components/upload/CVPreview";
 import JobDescriptionInput from "@/components/upload/JobDescriptionInput";
@@ -63,6 +64,7 @@ export default function UploadPage() {
         <div className="flex min-h-screen">
             <Sidebar />
             <main className="flex-1 md:ml-64 flex flex-col pb-24 md:pb-0">
+                <MobileHeader />
                 <header className="hidden md:flex items-center justify-between px-10 py-5 border-b border-white/10 bg-surface-container-low/50 backdrop-blur-sm sticky top-0 z-30">
                     <div>
                         <h2 className="text-2xl font-bold text-on-surface">
@@ -78,11 +80,12 @@ export default function UploadPage() {
                         <button
                             onClick={handleOptimize}
                             disabled={!canOptimize || isOptimizing}
+                            aria-busy={isOptimizing}
                             className="bg-primary-container text-white px-6 py-2.5 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                         >
                             {isOptimizing ? (
                                 <>
-                                    <span className="material-symbols-outlined text-lg animate-spin">
+                                    <span className="material-symbols-outlined text-lg animate-spin" aria-hidden="true">
                                         progress_activity
                                     </span>
                                     Optimizing...
@@ -154,11 +157,12 @@ export default function UploadPage() {
                                 <button
                                     onClick={handleOptimize}
                                     disabled={!canOptimize || isOptimizing}
-                                    className="md:hidden w-full bg-primary-container text-white py-3 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 flex items-center justify-center gap-2"
+                                    aria-busy={isOptimizing}
+                                    className="md:hidden w-full bg-primary-container text-white py-3 rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                 >
                                     {isOptimizing ? (
                                         <>
-                                            <span className="material-symbols-outlined text-lg animate-spin">
+                                            <span className="material-symbols-outlined text-lg animate-spin" aria-hidden="true">
                                                 progress_activity
                                             </span>
                                             Optimizing...

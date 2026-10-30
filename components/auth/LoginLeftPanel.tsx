@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { FileText, Zap, CheckCircle } from "lucide-react";
+import { Zap, CheckCircle } from "lucide-react";
+import { CVBoostLogo } from "@/components/brand";
 
 const stats = [
   { icon: <Zap size={18} />, label: "Instant Analysis" },
@@ -10,15 +10,13 @@ export default function LoginLeftPanel() {
   return (
     <div className="hidden lg:flex lg:w-1/2 bg-[#0b0e16] flex-col justify-between p-10 relative z-10 border-r border-white/5 overflow-hidden">
       {/* Logo */}
-      <div className="relative z-10 flex items-center gap-2">
-        <div className="w-10 h-10 rounded-md bg-primary-container flex items-center justify-center">
-          <FileText size={20} className="text-white" />
-        </div>
-        <Link href="/" className="group">
-          <span className="font-bold text-[#b4c5ff] text-xl tracking-tight group-hover:text-white transition-colors">
-            CVBoost
-          </span>
-        </Link>
+      <div className="relative z-10">
+        <CVBoostLogo
+          variant="full"
+          size="lg"
+          tagline="Career Intelligence"
+          href="/"
+        />
       </div>
 
       {/* Headline + copy */}
@@ -49,7 +47,6 @@ export default function LoginLeftPanel() {
           </div>
         ))}
       </div>
-
     </div>
   );
 }

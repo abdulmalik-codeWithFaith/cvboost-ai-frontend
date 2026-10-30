@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FileText } from "lucide-react";
+import { CVBoostLogo } from "@/components/brand";
 
 const footerLinks = ["Terms", "Privacy", "Support", "Contact"];
 
@@ -8,12 +8,14 @@ export default function Footer() {
     <footer className="border-t border-white/8 py-10 px-6 md:px-10">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Brand */}
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center">
-            <FileText size={14} className="text-white" />
-          </div>
-          <span className="font-bold text-[#b4c5ff] text-sm">CVBoost</span>
-          <span className="text-[#434655] text-xs ml-2">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <CVBoostLogo
+            variant="full"
+            size="sm"
+            tagline="AI-Powered Resume Optimization"
+            href="/"
+          />
+          <span className="text-[#6b7086] text-xs sm:border-l sm:border-white/10 sm:pl-3">
             © {new Date().getFullYear()} CVBoost. All rights reserved.
           </span>
         </div>

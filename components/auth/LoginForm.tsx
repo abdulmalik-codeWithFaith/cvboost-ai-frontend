@@ -1,9 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { CVBoostLogo } from "@/components/brand";
+import { useActionState, useState } from "react";
 import Link from "next/link";
-import { FileText, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
+import {
+  signIn,
+  signInWithGoogle,
+  type ActionState,
+} from "@/app/auth/action";
+import FormSubmitButton from "@/components/shared/FormSubmitButton";
+import {
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  ArrowRight,
+  LoaderCircle,
+} from "lucide-react";
 
 function GoogleIcon() {
   return (
@@ -19,57 +32,19 @@ function GoogleIcon() {
 export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+  const [state, formAction, isPending] = useActionState<ActionState, FormData>(
+    signIn,
+    null
+  );
 
   const inputBase =
     "w-full h-12 bg-[#1d1f28] rounded-lg border border-[#434655] text-[#e1e2ee] pl-11 pr-4 text-sm placeholder:text-[#434655] focus:outline-none focus:border-[#4cd7f6] focus:ring-1 focus:ring-[#4cd7f6]/40 transition-all";
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    if (!formData.email || !formData.password) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    const payload = {
-      email: formData.email,
-      password: formData.password,
-    };
-
-    try {
-      setIsLoading(true);
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        setError(data.message || "Login failed. Please try again.");
-        return;
-      }
-
-      router.push("/dashboard");
-    } catch (err) {
-      console.error("Login request failed:", err);
-      setError("An unexpected error occurred. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="w-full lg:w-1/2 flex items-center justify-center p-6 lg:p-10 relative z-10 bg-[#10131c]/50 backdrop-blur-sm">
       {/* Mobile logo */}
-      <div className="absolute top-6 left-6 lg:hidden flex items-center gap-2">
-        <div className="w-7 h-7 rounded-md bg-primary-container flex items-center justify-center">
-          <FileText size={14} className="text-white" />
-        </div>
-        <span className="font-bold text-[#b4c5ff] text-base tracking-tight">CVBoost</span>
+      <div className="absolute top-6 left-6 lg:hidden">
+        <CVBoostLogo variant="logo" size="sm" href="/" />
       </div>
 
       <div className="w-full max-w-[420px] mt-14 lg:mt-0">
@@ -85,7 +60,7 @@ export default function LoginForm() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form action={formAction} className="space-y-4">
           {/* Email */}
           <div>
             <label className="block text-xs font-semibold text-[#c3c6d7] uppercase tracking-wider mb-2">
@@ -94,7 +69,10 @@ export default function LoginForm() {
             <div className="relative">
               <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#434655]" />
               <input
+                name="email"
                 type="email"
+                autoComplete="email"
+                required
                 placeholder="name@company.com"
                 className={inputBase}
                 value={formData.email}
@@ -119,7 +97,10 @@ export default function LoginForm() {
             <div className="relative">
               <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#434655]" />
               <input
+                name="password"
                 type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                required
                 placeholder="••••••••"
                 className={`${inputBase} pr-11`}
                 value={formData.password}
@@ -136,9 +117,9 @@ export default function LoginForm() {
           </div>
 
           {/* Error message — only rendered when there's something to show */}
-          {error && (
+          {state?.error && (
             <p role="alert" className="text-sm text-red-400 -mt-1">
-              {error}
+              {state.error}
             </p>
           )}
 
@@ -146,12 +127,15 @@ export default function LoginForm() {
           <div className="pt-2">
             <button
               type="submit"
-              disabled={isLoading}
-              aria-busy={isLoading}
+              disabled={isPending}
+              aria-busy={isPending}
               className="w-full h-12 rounded-lg font-semibold text-sm text-white bg-primary-container hover:opacity-90 hover:-translate-y-0.5 transition-all shadow-lg shadow-[#2563eb]/15 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:translate-y-0"
             >
-              {isLoading ? (
-                "Signing in..."
+              {isPending ? (
+                <>
+                  <LoaderCircle size={16} className="animate-spin" aria-hidden="true" />
+                  Signing in...
+                </>
               ) : (
                 <>
                   Sign In
@@ -170,13 +154,15 @@ export default function LoginForm() {
         </div>
 
         {/* Google */}
-        <button
-          type="button"
-          className="w-full h-12 rounded-lg text-sm font-semibold text-[#e1e2ee] border border-white/10 bg-transparent hover:bg-white/5 transition-colors flex items-center justify-center gap-3"
-        >
-          <GoogleIcon />
-          Continue with Google
-        </button>
+        <form action={signInWithGoogle}>
+          <FormSubmitButton
+            pendingLabel="Connecting..."
+            className="w-full h-12 rounded-lg text-sm font-semibold text-[#e1e2ee] border border-white/10 bg-transparent hover:bg-white/5 transition-colors flex items-center justify-center gap-3"
+          >
+            <GoogleIcon />
+            Continue with Google
+          </FormSubmitButton>
+        </form>
 
         {/* Register link */}
         <p className="text-center mt-6 text-xs text-[#8d90a0]">
